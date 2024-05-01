@@ -13,6 +13,9 @@ public class Main {
             // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
             System.out.println("i = " + i);
             System.out.println("hello world");
+            System.out.println('♥');
+            System.out.println("♣");
+            // 52  [1,2,3,4,5,6,7,8]
         }
     }
 }
