@@ -1,6 +1,8 @@
 package org.example;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -9,7 +11,7 @@ public class Deck {
     public Deck(){
         generateDeck();
     }
-    
+
     public void generateDeck(){
         String[] symbolStr = {"2","3","4","5","6","7","8","9","10","J","Q","K","A"};
         for(Suits suit:Suits.values()){
@@ -17,6 +19,17 @@ public class Deck {
                 deckOfCards.add(new Card(suit,symbol));
             }
         }
+
+    }
+    public void shuffleDeck(){
+        Collections.shuffle(deckOfCards);
+    }
+
+    public  Card dealCard(){
+        Card topCard = deckOfCards.remove(deckOfCards.size()-1);
+        System.out.println("removed: ");
+        topCard.printCardDetails();
+        return topCard;
     }
 
     public int getDeckSize(){
