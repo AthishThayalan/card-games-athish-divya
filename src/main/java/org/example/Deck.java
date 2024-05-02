@@ -19,17 +19,13 @@ public class Deck {
                 deckOfCards.add(new Card(suit,symbol));
             }
         }
-
     }
     public void shuffleDeck(){
         Collections.shuffle(deckOfCards);
     }
 
     public  Card dealCard(){
-        Card topCard = deckOfCards.remove(deckOfCards.size()-1);
-        System.out.println("removed: ");
-        topCard.printCardDetails();
-        return topCard;
+        return deckOfCards.remove(deckOfCards.size()-1);
     }
 
     public int getDeckSize(){
@@ -39,6 +35,5 @@ public class Deck {
     public void printDeck(){
         deckOfCards.forEach(Card::printCardDetails);
     }
-
 
 }
