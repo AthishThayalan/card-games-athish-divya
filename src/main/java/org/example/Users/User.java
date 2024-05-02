@@ -15,7 +15,6 @@ public class User {
     private List<Card> cardsInHand;
     private UserInput userInput;
 
-
     public User(String name) {
         this.name = name;
         this.userInput = new UserInput();
@@ -39,7 +38,7 @@ public class User {
     }
 
     public Card playCard(int n) {
-        return cardsInHand.remove(n-1);
+        return cardsInHand.remove(n - 1);
 
     }
 
