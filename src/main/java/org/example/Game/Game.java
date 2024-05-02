@@ -4,8 +4,8 @@ import org.example.Deck.Deck;
 import org.example.Users.User;
 
 public abstract class Game {
-    private Deck deckOfCards;
-    private User[] users;
+    protected Deck deckOfCards;
+    protected User[] users;
 
     public Game(User[] users) {
         this.deckOfCards = new Deck();
