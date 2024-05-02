@@ -4,7 +4,7 @@ import org.example.Users.HeartsComputerUser;
 import org.example.Users.User;
 
 public class HeartsGame extends Game {
-
+    private int roundNumber = 0;
 
     public HeartsGame(User[] users) {
         super(users);
@@ -18,6 +18,18 @@ public class HeartsGame extends Game {
         }
     }
 
+
+    public void trick() {
+
+    }
+
+    public void round() {
+
+    }
+
+    public void passCards() {
+
+    }
 
     @Override
     public void resetGame() {
