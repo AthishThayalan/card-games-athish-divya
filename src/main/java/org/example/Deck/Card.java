@@ -56,7 +56,18 @@ public class Card {
 
     @Override
     public String toString(){
-        return "Suit: "+suit+", face symbol: "+face.getFaceSymbol()+", value: "+value;
+        StringBuilder builder = new StringBuilder();
+        // ASCII representations for each card
+        builder.append("┌─────────┐\n");
+        builder.append(String.format("│ %-8s│\n", getFaceSymbol()));
+        builder.append("│         │\n");
+        builder.append("│         │\n");
+        builder.append(String.format("│    %s    │\n", getSuitSymbol()));
+        builder.append("│         │\n");
+        builder.append("│         │\n");
+        builder.append(String.format("│%-8s │\n", getFaceSymbol()));
+        builder.append("└─────────┘\n");
+        return builder.toString();
     }
 
     public boolean equals(Card card) {
