@@ -8,15 +8,19 @@ public class Card {
     public Card(Suits suit,FaceValue face){
         this.suit = suit;
         this.face = face;
-        value = getValueFromSymbol(face.getSymbol());
+        value = getValueFromFaceSymbol(face.getFaceSymbol());
     }
 
     public Suits getSuit() {
         return suit;
     }
 
-    public String getSymbol() {
-        return face.getSymbol();
+    public String getSuitSymbol (){
+        return suit.getSuitSymbol();
+    }
+
+    public String getFaceSymbol() {
+        return face.getFaceSymbol();
     }
 
     public FaceValue getFace() {
@@ -27,7 +31,7 @@ public class Card {
         return value;
     }
 
-    public int getValueFromSymbol(String symbol){
+    public int getValueFromFaceSymbol(String symbol){
         if(Character.isDigit(symbol.charAt(0))){
             return Integer.parseInt(symbol);
         } else {
@@ -46,8 +50,9 @@ public class Card {
         }
     }
 
-    public void printCardDetails(){
-        System.out.println("Suit: "+suit+", symbol: "+face.getSymbol()+", value: "+value);
+    @Override
+    public String toString(){
+        return "Suit: "+suit+", face symbol: "+face.getFaceSymbol()+", value: "+value;
     }
 
 }

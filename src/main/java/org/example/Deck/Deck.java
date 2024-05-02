@@ -2,6 +2,7 @@ package org.example.Deck;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Deck {
@@ -18,6 +19,23 @@ public class Deck {
             }
         }
     }
+
+    public void resetDeck(){
+        generateDeck();
+        shuffleDeck();
+    }
+
+    public void sortDeck(){
+        deckOfCards.sort(new SortByValue());
+    }
+
+    public void sortDeck(CardComparator comparator){
+        if(comparator == CardComparator.SUIT)
+            deckOfCards.sort(new SortBySuit());
+        else
+            deckOfCards.sort(new SortByValue());
+    }
+
     public void shuffleDeck(){
         Collections.shuffle(deckOfCards);
     }
@@ -31,7 +49,7 @@ public class Deck {
     }
 
     public void printDeck(){
-        deckOfCards.forEach(Card::printCardDetails);
+        deckOfCards.forEach(x->System.out.println(x.toString()));
     }
 
 }

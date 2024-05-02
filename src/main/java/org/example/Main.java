@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Deck.CardComparator;
 import org.example.Deck.Deck;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -13,5 +14,11 @@ public class Main {
         System.out.println("_________________________");
         deck.printDeck();
         System.out.println("size: "+deck.getDeckSize());
+        System.out.println("_________________________");
+        deck.shuffleDeck();
+        deck.printDeck();
+        System.out.println("_________________________");
+        deck.sortDeck(CardComparator.SUIT);
+        deck.printDeck();
         }
     }
