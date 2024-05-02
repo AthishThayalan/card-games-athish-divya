@@ -5,7 +5,7 @@ public class Card {
     private FaceValue face;
     private int value;
 
-    public Card(Suits suit,FaceValue face){
+    public Card(Suits suit, FaceValue face) {
         this.suit = suit;
         this.face = face;
         value = getValueFromFaceSymbol(face.getFaceSymbol());
@@ -15,7 +15,7 @@ public class Card {
         return suit;
     }
 
-    public String getSuitSymbol (){
+    public String getSuitSymbol() {
         return suit.getSuitSymbol();
     }
 
@@ -35,18 +35,18 @@ public class Card {
         this.value = value;
     }
 
-    public int getValueFromFaceSymbol(String symbol){
-        if(Character.isDigit(symbol.charAt(0))){
+    public int getValueFromFaceSymbol(String symbol) {
+        if (Character.isDigit(symbol.charAt(0))) {
             return Integer.parseInt(symbol);
         } else {
-            switch(symbol){
-                case"J":
+            switch (symbol) {
+                case "J":
                     return 11;
-                case"Q":
+                case "Q":
                     return 12;
-                case"K":
+                case "K":
                     return 13;
-                case"A":
+                case "A":
                     return 14;
                 default:
                     return -1;
@@ -55,7 +55,7 @@ public class Card {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         // ASCII representations for each card
         builder.append("┌─────────┐\n");
@@ -71,6 +71,6 @@ public class Card {
     }
 
     public boolean equals(Card card) {
-        return face==card.face && suit==card.suit;
+        return face == card.face && suit == card.suit;
     }
 }
