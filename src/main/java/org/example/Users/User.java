@@ -11,9 +11,9 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class User {
-    private String name;
-    private List<Card> cardsInHand;
-    private UserInput userInput;
+    protected String name;
+    protected List<Card> cardsInHand;
+    protected UserInput userInput;
 
     public User(String name) {
         this.name = name;
