@@ -55,4 +55,7 @@ public class Card {
         return "Suit: "+suit+", face symbol: "+face.getFaceSymbol()+", value: "+value;
     }
 
+    public boolean equals(Card card) {
+        return face==card.face && suit==card.suit;
+    }
 }
