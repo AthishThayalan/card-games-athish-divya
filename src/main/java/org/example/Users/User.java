@@ -34,7 +34,7 @@ public class User {
         cardsInHand.add(card);
     }
 
-    public int amountofCardsInHand() {
+    public int amountOfCardsInHand() {
         return cardsInHand.size();
     }
 
