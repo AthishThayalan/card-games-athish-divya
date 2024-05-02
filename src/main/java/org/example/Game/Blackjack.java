@@ -10,13 +10,17 @@ public class Blackjack extends Game {
     private User[] players = new User[2];
 
 
-    public Blackjack(User user) {
-        super(user);
-        players[0] = user;
-        Computer dealer = new Computer();
-        players[1] = dealer;
-    }
+//    public Blackjack(User user) {
+//        super(user);
+//        players[0] = user;
+//        Computer dealer = new Computer();
+//        players[1] = dealer;
+//    }
 
+    public Blackjack(User player) {
+        super(new User[]{player, new Computer()});
+        this.players[0] = player;
+    }
 
     @Override
     public void resetGame() {
