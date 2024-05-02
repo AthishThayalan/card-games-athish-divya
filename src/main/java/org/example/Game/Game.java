@@ -7,16 +7,19 @@ public abstract class Game {
     protected Deck deckOfCards;
     protected User[] users;
 
-    public Game(User user) {
+    public Game(User[] users) {
         this.deckOfCards = new Deck();
-        this.users = new User[2];
-        this.users[0] = user;
+        this.users = users;
     }
 
     public abstract void resetGame();
+
     public abstract void play();
+
     public abstract boolean gameOngoing();
+
     public abstract boolean gameWon();
+
     public abstract boolean gameLost();
 
 }

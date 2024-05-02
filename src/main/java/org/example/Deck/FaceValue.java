@@ -6,10 +6,10 @@ public enum FaceValue {
 
     private final String faceSymbol;
 
-    FaceValue(String symbol){
+    FaceValue(String symbol) {
         this.faceSymbol = symbol;
     }
-
+    
     public String getFaceSymbol() {
         return faceSymbol;
     }
