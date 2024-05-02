@@ -1,14 +1,14 @@
-package org.example;
+package org.example.Deck;
 
 public class Card {
     private Suits suit;
-    private String symbol;
+    private FaceValue face;
     private int value;
 
-    public Card(Suits suit,String symbol){
+    public Card(Suits suit,FaceValue face){
         this.suit = suit;
-        this.symbol = symbol;
-        this.value = getValueFromSymbol(symbol);
+        this.face = face;
+        value = getValueFromSymbol(face.getSymbol());
     }
 
     public Suits getSuit() {
@@ -16,7 +16,11 @@ public class Card {
     }
 
     public String getSymbol() {
-        return symbol;
+        return face.getSymbol();
+    }
+
+    public FaceValue getFace() {
+        return face;
     }
 
     public int getValue() {
@@ -40,11 +44,10 @@ public class Card {
                     return -1;
             }
         }
-
     }
 
     public void printCardDetails(){
-        System.out.println("Suit: "+this.suit+", symbol: "+this.symbol+", value: "+this.value);
+        System.out.println("Suit: "+suit+", symbol: "+face.getSymbol()+", value: "+value);
     }
 
 }

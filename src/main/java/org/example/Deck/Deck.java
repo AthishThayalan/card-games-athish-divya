@@ -1,6 +1,5 @@
-package org.example;
+package org.example.Deck;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,10 +12,9 @@ public class Deck {
     }
 
     public void generateDeck(){
-        String[] symbolStr = {"2","3","4","5","6","7","8","9","10","J","Q","K","A"};
         for(Suits suit:Suits.values()){
-            for(String symbol:symbolStr){
-                deckOfCards.add(new Card(suit,symbol));
+            for(FaceValue face:FaceValue.values()){
+                deckOfCards.add(new Card(suit,face));
             }
         }
     }
@@ -24,7 +22,7 @@ public class Deck {
         Collections.shuffle(deckOfCards);
     }
 
-    public  Card dealCard(){
+    public Card dealCard(){
         return deckOfCards.remove(deckOfCards.size()-1);
     }
 

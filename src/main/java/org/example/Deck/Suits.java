@@ -1,9 +1,9 @@
-package org.example;
+package org.example.Deck;
 
 public enum Suits {
     diamonds("♦"),spades("♠"),clubs("♣"),hearts("♥");
 
-    private String suitSymbol;
+    private final String suitSymbol;
 
     Suits(String suitSymbol) {
         this.suitSymbol = suitSymbol;
