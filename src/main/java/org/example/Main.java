@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         Blackjack blackjack = new Blackjack(new User("Athish"));
         blackjack.dealInitialCards();
-        System.out.println();
+        blackjack.printUsersAndCards();
 
 
 

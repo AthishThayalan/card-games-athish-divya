@@ -61,4 +61,12 @@ public class Blackjack extends Game {
         }
     }
 
+    private void assignCardValues(Card card){
+        if (card.getFaceSymbol().equals("J") || card.getFaceSymbol().equals("Q") || card.getFaceSymbol().equals("K")) {
+            card.setValue(10);
+        }else if (card.getFaceSymbol().equals("A")) {
+            card.setValue(1);
+        }
+    }
+
 }

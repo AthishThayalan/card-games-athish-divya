@@ -43,6 +43,10 @@ public class User {
 
     }
 
+    public int getHandValue(){
+        return 0;
+    }
+
     public void printCards() {
         for (int i = 0; i < cardsInHand.size(); i++) {
             System.out.println((i + 1) + ".) " + cardsInHand.get(i).toString());
