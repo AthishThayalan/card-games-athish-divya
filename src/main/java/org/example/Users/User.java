@@ -48,7 +48,7 @@ public class User {
 
     public void printCards() {
         for (int i = 0; i < cardsInHand.size(); i++) {
-            System.out.println((i + 1) + ".)\n" + cardsInHand.get(i).toString());
+            System.out.printf((i + 1) + ".)\n" + cardsInHand.get(i).toString());
         }
     }
 

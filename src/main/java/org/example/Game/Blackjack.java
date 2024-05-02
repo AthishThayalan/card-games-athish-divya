@@ -6,20 +6,12 @@ import org.example.Users.Computer;
 import org.example.Users.User;
 
 public class Blackjack extends Game {
+    private User[] players;
 
-    private User[] players = new User[2];
+    public Blackjack(User[] users) {
+        super(users);
+        this.players = users;
 
-
-//    public Blackjack(User user) {
-//        super(user);
-//        players[0] = user;
-//        Computer dealer = new Computer();
-//        players[1] = dealer;
-//    }
-
-    public Blackjack(User player) {
-        super(new User[]{player, new Computer()});
-        this.players[0] = player;
     }
 
     @Override
@@ -55,13 +47,17 @@ public class Blackjack extends Game {
         }
     }
 
+    public int getPlayerHandTotal(User player){
+        return  player.getHandValue();
+    }
+
     public void dealInitialCards(){
         for(User player : players){
             for(int i =0;i<2;i++){
                 Card dealtCard = deckOfCards.dealCard();
+                assignCardValues(dealtCard);
                 player.addCard(dealtCard);
             }
-
         }
     }
 
@@ -69,7 +65,12 @@ public class Blackjack extends Game {
         if (card.getFaceSymbol().equals("J") || card.getFaceSymbol().equals("Q") || card.getFaceSymbol().equals("K")) {
             card.setValue(10);
         }else if (card.getFaceSymbol().equals("A")) {
-            card.setValue(1);
+            if(getPlayerHandTotal(players[0]  )<11){
+                card.setValue(11);
+            } else {
+                card.setValue(1);
+            }
+
         }
     }
 
