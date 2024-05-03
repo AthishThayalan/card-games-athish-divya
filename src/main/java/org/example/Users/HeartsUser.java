@@ -8,7 +8,12 @@ import java.util.List;
 public class HeartsUser extends User {
     private final List<Card> SCORING_CARDS = new ArrayList<Card>();
     private List<Integer> scores;
-    private List<Card> collectedScoringCards;
+    private int amountOfHeartsCollected;
+    private boolean hasQueenOfSpade;
+
+    public void setScores(List<Integer> scores) {
+        this.scores = scores;
+    }
 
     public HeartsUser(String name) {
         super(name);
@@ -16,6 +21,12 @@ public class HeartsUser extends User {
         for (FaceValue face : FaceValue.values())
             SCORING_CARDS.add(new Card(Suits.hearts, face));
         SCORING_CARDS.add(new Card(Suits.spades, FaceValue.QUEEN));
+        newTrick();
+    }
+
+    public void newTrick() {
+        amountOfHeartsCollected = 0;
+        hasQueenOfSpade = false;
     }
 
     public void sortHand() {
@@ -23,10 +34,15 @@ public class HeartsUser extends User {
         getCardsInHand().sort(new SortByValue());
     }
 
-    public Card[] passThreeCards() {
+    public Card[] selectThreeCardsToBePassed() {
         Card[] cardsToBePassed = new Card[3];
         //To be chosen by the user
         return cardsToBePassed;
+    }
+
+    public void addThreeCards(Card[] cards) {
+        for (Card card : cards)
+            addCard(card);
     }
 
     public boolean has2OfClubs() {
@@ -38,27 +54,37 @@ public class HeartsUser extends User {
     }
 
     public boolean hasShotTheMoon() {
-        for (Card card : SCORING_CARDS) {
-            boolean hasCard = false;
-            for (Card cardCollected : collectedScoringCards) {
-                if (cardCollected.equals(card)) {
-                    hasCard = true;
-                    break;
-                }
-            }
-            if (!hasCard) {
-                return false;
-            }
-        }
-        return true;
+        return findScore() == 26;
+    }
+
+    public void addCardToPile(Card card) {
+        if (card.getSuit() == Suits.hearts)
+            amountOfHeartsCollected++;
+        if (card.getSuit() == Suits.spades && card.getFace() == FaceValue.QUEEN)
+            hasQueenOfSpade = true;
     }
 
     public int findScore() {
-        return 0;
+        return hasQueenOfSpade ? 13 + amountOfHeartsCollected : amountOfHeartsCollected;
     }
 
     public void updateScores() {
         scores.add(findScore());
     }
 
+    public int totalScore() {
+        return scores.stream().reduce(Integer::sum).orElse(0);
+    }
+
+    public List<Integer> getScores() {
+        return scores;
+    }
+
+    public int getAmountOfHeartsCollected() {
+        return amountOfHeartsCollected;
+    }
+
+    public boolean isHasQueenOfSpade() {
+        return hasQueenOfSpade;
+    }
 }
