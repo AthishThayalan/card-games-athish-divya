@@ -6,14 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HeartsUser extends User {
-
+    private final List<Card> SCORING_CARDS = new ArrayList<Card>();
     private List<Integer> scores;
     private List<Card> collectedScoringCards;
 
     public HeartsUser(String name) {
         super(name);
         scores = new ArrayList<Integer>();
-        collectedScoringCards = new ArrayList<Card>();
+        for (FaceValue face : FaceValue.values())
+            SCORING_CARDS.add(new Card(Suits.hearts, face));
+        SCORING_CARDS.add(new Card(Suits.spades, FaceValue.QUEEN));
     }
 
     public void sortHand() {
@@ -36,7 +38,19 @@ public class HeartsUser extends User {
     }
 
     public boolean hasShotTheMoon() {
-        return false;
+        for (Card card : SCORING_CARDS) {
+            boolean hasCard = false;
+            for (Card cardCollected : collectedScoringCards) {
+                if (cardCollected.equals(card)) {
+                    hasCard = true;
+                    break;
+                }
+            }
+            if (!hasCard) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public int findScore() {
