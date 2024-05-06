@@ -13,12 +13,7 @@ public class Main {
         Computer computer = new Computer();
         User[] users = {user,computer};
         Blackjack blackjack = new Blackjack(users);
-        blackjack.dealInitialCardsForTest();
-        blackjack.printUsersAndCards();
-
-        System.out.println("Player sum: "+ blackjack.getPlayerHandTotal(user));
-
-        System.out.println("CPU sum: "+blackjack.getPlayerHandTotal(computer));
+        blackjack.play();
 
     }
 

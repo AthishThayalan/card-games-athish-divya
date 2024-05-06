@@ -12,7 +12,6 @@ public class Computer extends User {
     public int getHandValue() {
         int sum = 0;
         for (Card card : cardsInHand) {
-            System.out.println("Card value: "+card.getValue());
             sum += card.getValue();
         }
         return sum;
