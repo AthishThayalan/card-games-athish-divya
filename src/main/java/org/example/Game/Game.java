@@ -5,11 +5,9 @@ import org.example.Users.User;
 
 public abstract class Game {
     private Deck deckOfCards;
-    private User[] users;
 
     public Game(User[] users) {
         this.deckOfCards = new Deck();
-        this.users = users;
     }
 
     public abstract void resetGame();
@@ -18,8 +16,5 @@ public abstract class Game {
 
     public abstract boolean gameOngoing();
 
-    public abstract boolean gameWon();
-
-    public abstract boolean gameLost();
 
 }
