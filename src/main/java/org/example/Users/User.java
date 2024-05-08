@@ -51,6 +51,4 @@ public class User {
             System.out.printf((i + 1) + ".)\n" + cardsInHand.get(i).toString());
         }
     }
-
-
 }

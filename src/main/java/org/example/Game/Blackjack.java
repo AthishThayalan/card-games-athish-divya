@@ -35,22 +35,22 @@ public class Blackjack extends Game {
         User computer = users[1];
         User player1 = users[0];
 
-        if(checkForBlackjack(player1,computer)){
-            this.blackjackDisplay.printUsersAndCards(players,userStands);
+        if (checkForBlackjack(player1, computer)) {
+            this.blackjackDisplay.printUsersAndCards(players, userStands);
             return;
         }
         outerLoop:
         while (gameOngoing()) {
-            this.blackjackDisplay.printUsersAndCards(players,userStands);
-            System.out.println("The value of your hand is: "+getPlayerHandTotal(player1));
+            this.blackjackDisplay.printUsersAndCards(players, userStands);
+            System.out.println("The value of your hand is: " + getPlayerHandTotal(player1));
             for (User player : players) {
                 if (player instanceof Computer) {
                     while (getPlayerHandTotal(player) < 17) {
                         Card dealtCard = deckOfCards.dealCard();
                         assignCardValues(dealtCard, player);
                         player.addCard(dealtCard);
-                        adjustAcesValue(computer);
-                        this.blackjackDisplay.printUsersAndCards(players,userStands);
+                        adjustAcesValue(player);
+                        this.blackjackDisplay.printUsersAndCards(players, userStands);
                     }
                 } else {
                     System.out.println(player.getName() + ", do you want to (1) Hit or (2) Stand?");
@@ -62,11 +62,12 @@ public class Blackjack extends Game {
                             assignCardValues(dealtCard, player);
                             player.addCard(dealtCard);
                             adjustAcesValue(player1);
-                            this.blackjackDisplay.printUsersAndCards(players,userStands);
+                            this.blackjackDisplay.printUsersAndCards(players, userStands);
                             System.out.println("Player 1 value: " + player1.getHandValue());
                             System.out.println("CPU value: " + computer.getHandValue());
                             if (getPlayerHandTotal(player) > 21) {
-                                System.out.println("Player 1 has gone bust! Player 1's hand totalled:  " + getPlayerHandTotal(player));
+                                System.out.println(player1.getName()+" has gone bust! Player 1's hand totalled:  " + getPlayerHandTotal(player));
+                                computer.printCards();
                                 break outerLoop;
                             } else if (getPlayerHandTotal(player) == 21) {
                                 System.out.println("YOU WIN! YOU GOT 21!!!");
@@ -81,22 +82,22 @@ public class Blackjack extends Game {
                 }
             }
 
-            if (userChoseStand()) {
-                this.blackjackDisplay.printUsersAndCards(players,userStands);
+            if (userChoseStand() || checkForBlackjack(player1, computer)) {
+                this.blackjackDisplay.printUsersAndCards(players, userStands);
                 int playerTotal = getPlayerHandTotal(player1);
                 int computerTotal = getPlayerHandTotal(computer);
 
                 if (playerTotal > 21) {
                     System.out.println("UNLUCKY YOU WENT BUST. DEALER WINS!");
                 } else if (computerTotal > 21 || playerTotal > computerTotal) {
-                    System.out.println("YOU WIN!!");
+                    System.out.println("CONGRATULATIONS YOU BEAT THE DEALER!");
                 } else if (playerTotal < computerTotal) {
-                    System.out.println("DEALER WINS!");
+                    System.out.println("Unlucky. The Dealers beat you this time :(");
                 } else {
-                    System.out.println("It's a tie! WOOHOOO");
+                    System.out.println("WOW! IT'S A TIE!");
                 }
-                System.out.println("Player value : "+getPlayerHandTotal(player1));
-                System.out.println("Dealer Value: "+getPlayerHandTotal(computer));
+                System.out.println(player1.getName()+"'s value: " + getPlayerHandTotal(player1));
+                System.out.println("Dealer Value: " + getPlayerHandTotal(computer));
                 break;
 
             }
@@ -124,19 +125,19 @@ public class Blackjack extends Game {
         return false;
     }
 
-    public boolean userChoseStand(){
+    public boolean userChoseStand() {
         return this.userStands;
     }
 
-    public int getPlayerHandTotal(User player){
-        return  player.getHandValue();
+    public int getPlayerHandTotal(User player) {
+        return player.getHandValue();
     }
 
-    public void dealInitialCards(){
-        for(User player : players){
-            for(int i =0;i<2;i++){
+    public void dealInitialCards() {
+        for (User player : players) {
+            for (int i = 0; i < 2; i++) {
                 Card dealtCard = deckOfCards.dealCard();
-                assignCardValues(dealtCard,player);
+                assignCardValues(dealtCard, player);
                 player.addCard(dealtCard);
                 adjustAcesValue(player);
 
@@ -144,12 +145,13 @@ public class Blackjack extends Game {
         }
     }
 
-    private boolean checkForBlackjack(User player1, User player2) {
+    private boolean checkForBlackjack(User player1, User dealer) {
         if (getPlayerHandTotal(player1) == 21) {
             System.out.println(player1.getName() + " has blackjack! " + player1.getName() + " wins!");
             return true;
-        } else if (getPlayerHandTotal(player2) == 21) {
-            System.out.println(player2.getName() + " has blackjack! " + player2.getName() + " wins!");
+        } else if (getPlayerHandTotal(dealer) == 21) {
+            System.out.println(dealer.getName() + " has blackjack! " + dealer.getName() + " wins!");
+            dealer.printCards();
             return true;
         }
         return false;
@@ -160,15 +162,12 @@ public class Blackjack extends Game {
         for (Card card : player.getCardsInHand()) {
             if (card.getFaceSymbol().equals("A")) {
                 int handTotal = getPlayerHandTotal(player);
-                if ((handTotal - card.getValue() + 11 <= 21)) {
-                    card.setValue(11);
-                } else {
+                if ((handTotal - card.getValue() + 11 > 21)) {
                     card.setValue(1);
                 }
             }
         }
     }
-
 
     private void assignCardValues(Card card, User player) {
         if (card.getFaceSymbol().equals("J") || card.getFaceSymbol().equals("Q") || card.getFaceSymbol().equals("K")) {
