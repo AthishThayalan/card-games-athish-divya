@@ -2,10 +2,10 @@ package org.example.Users;
 
 import org.example.Deck.Card;
 
-public class Computer extends User {
+public class BlackjackUser extends User {
 
-    public Computer() {
-        super("CPU");
+    public BlackjackUser(String name) {
+        super(name);
     }
 
     @Override
