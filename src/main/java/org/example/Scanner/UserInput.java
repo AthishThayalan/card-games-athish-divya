@@ -39,4 +39,9 @@ public class UserInput {
         } while (!validInput);
         return value;
     }
+
+    public static String readName() {
+        System.out.println("Please enter your name:");
+        return scanner.nextLine();
+    }
 }
