@@ -5,6 +5,7 @@ import org.example.Deck.Deck;
 import org.example.Deck.FaceValue;
 import org.example.Deck.Suits;
 import org.example.Scanner.UserInput;
+import org.example.Users.BlackjackUser;
 import org.example.Users.Computer;
 import org.example.Users.User;
 
@@ -53,6 +54,9 @@ public class Blackjack extends Game {
                         this.blackjackDisplay.printUsersAndCards(players, userStands);
                     }
                 } else {
+                    System.out.println(player.getName() + ", how much do you want to bet?");
+                    double bet = UserInput.readDouble();
+                    ((BlackjackUser) player).setBet(bet);
                     System.out.println(player.getName() + ", do you want to (1) Hit or (2) Stand?");
                     int choice;
                     do {
