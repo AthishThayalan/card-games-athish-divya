@@ -1,14 +1,10 @@
 package org.example.Users;
 
 import org.example.Deck.Card;
-import org.example.Deck.FaceValue;
-import org.example.Deck.Suits;
 import org.example.Scanner.UserInput;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class User {
     protected String name;
@@ -51,4 +47,9 @@ public class User {
             System.out.printf((i + 1) + ".)\n" + cardsInHand.get(i).toString());
         }
     }
+
+    public int getInput() {
+        return userInput.readInt(amountOfCardsInHand());
+    }
+
 }

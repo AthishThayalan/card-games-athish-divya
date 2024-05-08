@@ -67,7 +67,7 @@ public class Card {
         builder.append("│         │\n");
         builder.append(String.format("│%-8s │\n", getFaceSymbol()));
         builder.append("└─────────┘\n");
-        return builder.toString();
+        return getSuitSymbol() + getFaceSymbol();
     }
 
     public boolean equals(Card card) {

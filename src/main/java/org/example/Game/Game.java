@@ -1,7 +1,6 @@
 package org.example.Game;
 
 import org.example.Deck.Deck;
-import org.example.Users.User;
 
 public abstract class Game {
     protected Deck deckOfCards;
