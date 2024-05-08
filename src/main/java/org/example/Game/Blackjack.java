@@ -13,12 +13,14 @@ import java.util.List;
 public class Blackjack extends Game {
     private User[] players;
     private boolean userStands;
+    private BlackjackDisplay blackjackDisplay;
 
     public Blackjack(User[] users) {
         super(users);
         this.userStands = false;
         this.players = users;
-        dealInitialCards();
+        this.blackjackDisplay = new BlackjackDisplay();
+
     }
 
     @Override
@@ -28,11 +30,18 @@ public class Blackjack extends Game {
 
     @Override
     public void play() {
+        dealInitialCards();
+
         User computer = users[1];
         User player1 = users[0];
+
+        if(checkForBlackjack(player1,computer)){
+            this.blackjackDisplay.printUsersAndCards(players,userStands);
+            return;
+        }
         outerLoop:
         while (gameOngoing()) {
-            printUsersAndCards();
+            this.blackjackDisplay.printUsersAndCards(players,userStands);
             System.out.println("The value of your hand is: "+getPlayerHandTotal(player1));
             for (User player : players) {
                 if (player instanceof Computer) {
@@ -41,7 +50,7 @@ public class Blackjack extends Game {
                         assignCardValues(dealtCard, player);
                         player.addCard(dealtCard);
                         adjustAcesValue(computer);
-                        printUsersAndCards();
+                        this.blackjackDisplay.printUsersAndCards(players,userStands);
                     }
                 } else {
                     System.out.println(player.getName() + ", do you want to (1) Hit or (2) Stand?");
@@ -53,7 +62,7 @@ public class Blackjack extends Game {
                             assignCardValues(dealtCard, player);
                             player.addCard(dealtCard);
                             adjustAcesValue(player1);
-                            printUsersAndCards();
+                            this.blackjackDisplay.printUsersAndCards(players,userStands);
                             System.out.println("Player 1 value: " + player1.getHandValue());
                             System.out.println("CPU value: " + computer.getHandValue());
                             if (getPlayerHandTotal(player) > 21) {
@@ -73,7 +82,7 @@ public class Blackjack extends Game {
             }
 
             if (userChoseStand()) {
-                printUsersAndCards();
+                this.blackjackDisplay.printUsersAndCards(players,userStands);
                 int playerTotal = getPlayerHandTotal(player1);
                 int computerTotal = getPlayerHandTotal(computer);
 
@@ -94,8 +103,6 @@ public class Blackjack extends Game {
 
         }
     }
-
-
 
     @Override
     public boolean gameOngoing() {
@@ -121,39 +128,6 @@ public class Blackjack extends Game {
         return this.userStands;
     }
 
-    public  String drawFlippedCard() {
-        StringBuilder builder = new StringBuilder();
-        // ASCII representations for each card
-        builder.append("┌──────────┐\n");
-        for (int i = 0; i < 8; i++) {
-            builder.append("│##########│\n");
-        }
-        builder.append("└──────────┘\n");
-        return builder.toString();
-    }
-
-    public void printUsersAndCards() {
-        for (User player : players) {
-            System.out.println(player.getName() + "'s cards:");
-            if (player instanceof Computer) {
-                List<Card> cards = player.getCardsInHand();
-                System.out.println(cards.get(0));
-                if(userChoseStand()){
-                    for(int i = 1;i<cards.size();i++){
-                        System.out.println(cards.get(i));
-                    }
-
-                } else {
-                    System.out.println(drawFlippedCard());
-                }
-
-            } else {
-                player.printCards();
-            }
-            System.out.println();
-        }
-    }
-
     public int getPlayerHandTotal(User player){
         return  player.getHandValue();
     }
@@ -165,30 +139,43 @@ public class Blackjack extends Game {
                 assignCardValues(dealtCard,player);
                 player.addCard(dealtCard);
                 adjustAcesValue(player);
+
             }
         }
     }
 
+    private boolean checkForBlackjack(User player1, User player2) {
+        if (getPlayerHandTotal(player1) == 21) {
+            System.out.println(player1.getName() + " has blackjack! " + player1.getName() + " wins!");
+            return true;
+        } else if (getPlayerHandTotal(player2) == 21) {
+            System.out.println(player2.getName() + " has blackjack! " + player2.getName() + " wins!");
+            return true;
+        }
+        return false;
+    }
 
 
-    // Created a seperate method so if In the inital dealing of the 2 cards and ACE was dealt , it always loops through the cards and dynamically changes A from 1 to 11 if possible
     public void adjustAcesValue(User player) {
-        for(Card card : player.getCardsInHand()){
-            if(card.getFaceSymbol().equals("A")){
-                if(getPlayerHandTotal(player) + 11 < 21){
+        for (Card card : player.getCardsInHand()) {
+            if (card.getFaceSymbol().equals("A")) {
+                int handTotal = getPlayerHandTotal(player);
+                if ((handTotal - card.getValue() + 11 <= 21)) {
                     card.setValue(11);
+                } else {
+                    card.setValue(1);
                 }
             }
         }
     }
 
+
     private void assignCardValues(Card card, User player) {
         if (card.getFaceSymbol().equals("J") || card.getFaceSymbol().equals("Q") || card.getFaceSymbol().equals("K")) {
             card.setValue(10);
         } else if (card.getFaceSymbol().equals("A")) {
-            card.setValue(1);
+            card.setValue(11);
         }
 
     }
-
 }

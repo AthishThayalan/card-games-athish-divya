@@ -27,6 +27,7 @@ public class Deck {
         shuffleDeck();
     }
 
+
     public void sortDeck() {
         deckOfCards.sort(new SortByValue());
     }
