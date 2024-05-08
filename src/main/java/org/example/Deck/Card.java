@@ -1,5 +1,7 @@
 package org.example.Deck;
 
+import java.sql.Array;
+
 public class Card {
     private Suits suit;
     private FaceValue face;
@@ -61,12 +63,12 @@ public class Card {
         builder.append("┌─────────┐\n");
         builder.append(String.format("│ %-8s│\n", getFaceSymbol()));
         builder.append("│         │\n");
-        builder.append("│         │\n");
         builder.append(String.format("│    %s    │\n", getSuitSymbol()));
         builder.append("│         │\n");
-        builder.append("│         │\n");
-        builder.append(String.format("│%-8s │\n", getFaceSymbol()));
+        builder.append(String.format("│%8s │\n", getFaceSymbol()));
         builder.append("└─────────┘\n");
+//        String[] cardArr = {"┌─────────┐",String.format("│ %-8s│\n", getFaceSymbol()),"│         │",String.format("│    %s    │", getSuitSymbol()),"│         │",String.format("│%8s │\n", getFaceSymbol()),"└─────────┘"};
+
         return builder.toString();
     }
 
