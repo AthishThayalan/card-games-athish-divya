@@ -6,7 +6,7 @@ import org.example.Users.User;
 public abstract class Game {
     protected Deck deckOfCards;
 
-    public Game(User[] users) {
+    public Game() {
         this.deckOfCards = new Deck();
     }
 

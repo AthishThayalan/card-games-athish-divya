@@ -16,7 +16,7 @@ public class Blackjack extends Game {
     private BlackjackDisplay blackjackDisplay;
 
     public Blackjack(User[] users) {
-        super(users);
+        super();
         this.userStands = false;
         this.players = users;
         this.blackjackDisplay = new BlackjackDisplay();
@@ -32,8 +32,8 @@ public class Blackjack extends Game {
     public void play() {
         dealInitialCards();
 
-        User computer = users[1];
-        User player1 = users[0];
+        User computer = players[1];
+        User player1 = players[0];
 
         if (checkForBlackjack(player1, computer)) {
             this.blackjackDisplay.printUsersAndCards(players, userStands);
@@ -115,15 +115,6 @@ public class Blackjack extends Game {
         return true;
     }
 
-    @Override
-    public boolean gameWon() {
-        return false;
-    }
-
-    @Override
-    public boolean gameLost() {
-        return false;
-    }
 
     public boolean userChoseStand() {
         return this.userStands;
