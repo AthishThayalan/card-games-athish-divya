@@ -14,7 +14,6 @@ public class Main {
         User[] users = {user,computer};
         Blackjack blackjack = new Blackjack(users);
         blackjack.play();
-
     }
 
 }

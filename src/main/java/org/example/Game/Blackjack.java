@@ -16,7 +16,6 @@ public class Blackjack extends Game {
     private BlackjackDisplay blackjackDisplay;
 
     public Blackjack(User[] users) {
-        super();
         this.userStands = false;
         this.players = users;
         this.blackjackDisplay = new BlackjackDisplay();
