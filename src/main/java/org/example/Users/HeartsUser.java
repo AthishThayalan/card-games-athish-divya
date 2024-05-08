@@ -22,14 +22,12 @@ public class HeartsUser extends User {
         hasQueenOfSpade = false;
     }
 
-    @Override
     public void sortHand() {
         List<Card> cards = getCardsInHand();
         cards.sort(new SortBySuit());
         setCardsInHand(cards);
     }
 
-    @Override
     public Card[] selectThreeCardsToBePassed() {
         System.out.println("User selecting cards");
         Card[] cardsToBePassed = new Card[3];
@@ -51,13 +49,11 @@ public class HeartsUser extends User {
         return cardsToBePassed;
     }
 
-    @Override
     public void addThreeCards(Card[] cards) {
         for (Card card : cards)
             addCard(card);
     }
 
-    @Override
     public Card selectOneCard(ArrayList<Card> cards) {
         Suits suit = cards.get(0).getSuit();
         System.out.println("Cards in hand:");
@@ -78,14 +74,13 @@ public class HeartsUser extends User {
         return (int) getCardsInHand().stream().filter(card -> card.getSuit() == suit).count();
     }
 
-    @Override
     public Card selectOneCard(boolean isHeartBroken) {
         System.out.println("Cards in hand:");
         printCards();
         System.out.println("Please choose a card to play");
         int cardToBePlayed = getInput();
         Card card = playCard(cardToBePlayed);
-        if (!isHeartBroken && card.getSuit() == Suits.hearts) {
+        if (!isHeartBroken && card.getSuit() == Suits.hearts && amountOfCardsInHand(Suits.hearts) != amountOfCardsInHand()) {
             System.out.println("Card cannot be selected as hearts have not been broken.");
             addCard(card);
             sortHand();
@@ -94,7 +89,6 @@ public class HeartsUser extends User {
         return card;
     }
 
-    @Override
     public boolean hasTwoOfClubs() {
         for (Card card : getCardsInHand()) {
             if (card.equals(new Card(Suits.clubs, FaceValue.TWO)))
@@ -103,12 +97,10 @@ public class HeartsUser extends User {
         return false;
     }
 
-    @Override
     public boolean hasShotTheMoon() {
         return findScore() == 26;
     }
 
-    @Override
     public void addCardToPile(ArrayList<Card> cards) {
         for (Card card : cards) {
             if (card.getSuit() == Suits.hearts) {
@@ -128,22 +120,18 @@ public class HeartsUser extends User {
         System.out.println("------------------------------------------");
     }
 
-    @Override
     public int findScore() {
         return hasQueenOfSpade ? 13 + amountOfHeartsCollected : amountOfHeartsCollected;
     }
 
-    @Override
     public void updateScores(int score) {
         scores.add(score);
     }
 
-    @Override
     public int totalScore() {
         return scores.stream().reduce(Integer::sum).orElse(0);
     }
 
-    @Override
     public List<Integer> getScores() {
         return scores;
     }

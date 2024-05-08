@@ -1,26 +1,27 @@
 package org.example.Game;
 
 import org.example.Deck.*;
-import org.example.Users.User;
+import org.example.Users.HeartsUser;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class HeartsGame extends Game {
     private int roundNumber = 0;
     private boolean isHeartBroken = false;
     private int userToLeadTheTrick;
+    private final HeartsUser[] users;
 
 
-    public HeartsGame(User[] users) {
-        super(users);
+    public HeartsGame(HeartsUser[] users) {
+        super();
+        this.users = users;
     }
 
     public void dealerDeals() {
         System.out.println("Dealing Cards");
         deckOfCards.shuffleDeck();
         for (int i = 0; i < 13; i++) {
-            for (User user : users)
+            for (HeartsUser user : users)
                 user.addCard(deckOfCards.dealCard());
         }
     }
@@ -29,7 +30,7 @@ public class HeartsGame extends Game {
     public void trick(boolean isFirstTrick) {
         int currentUser = userToLeadTheTrick;
         ArrayList<Card> cardsPlayed = new ArrayList<>();
-        for (User user : users) {
+        for (HeartsUser user : users) {
             System.out.println(user.getName());
             user.printCards();
         }
@@ -40,7 +41,6 @@ public class HeartsGame extends Game {
         }
         System.out.println("User " + users[userToLeadTheTrick].getName() + " played " + cardsPlayed.get(0).toString());
         for (int i = 1; i < 4; i++) {
-            currentUser++;
             if (currentUser >= 4)
                 currentUser = 0;
             cardsPlayed.add(users[currentUser].selectOneCard(cardsPlayed));
@@ -104,7 +104,19 @@ public class HeartsGame extends Game {
     }
 
     public void displayScores() {
-        System.out.println("Display scores");
+        int[][] scores = new int[4][];
+        for (int i = 0; i < 4; i++) {
+            scores[i] = users[i].getScores().stream().mapToInt(x -> x).toArray();
+        }
+        System.out.println(" Scores ");
+        System.out.println("=========");
+        System.out.format("%15s%15s%15s%15s%n", users[0].getName(), users[1].getName(), users[2].getName(), users[3].getName());
+        for (int i = 0; i < scores[0].length; i++) {
+            System.out.format("%15s%15s%15s%15s%n", scores[0][i], scores[1][i], scores[2][i], scores[3][i]);
+        }
+        System.out.println("----------------------------------");
+        System.out.format("%15s%15s%15s%15s%n", users[0].totalScore(), users[1].totalScore(), users[2].totalScore(), users[3].totalScore());
+        System.out.println("----------------------------------");
     }
 
     private int getUserWithTwoOfClub() {
@@ -128,7 +140,7 @@ public class HeartsGame extends Game {
                 System.out.println("Please select three cards to be passed to the player opposite to you");
                 break;
         }
-        for (User user : users) {
+        for (HeartsUser user : users) {
             cardsToBePassed.add(user.selectThreeCardsToBePassed());
         }
         System.out.println("You have received :");
@@ -180,7 +192,11 @@ public class HeartsGame extends Game {
 
     @Override
     public void resetGame() {
+        for (HeartsUser user : users) {
+            user.newRound();
+        }
         deckOfCards = new Deck();
+        isHeartBroken = false;
         roundNumber++;
     }
 
@@ -193,18 +209,10 @@ public class HeartsGame extends Game {
 
     @Override
     public boolean gameOngoing() {
-        return Arrays.stream(users).anyMatch(user -> user.totalScore() < 100);
+        for (HeartsUser user : users) {
+            if (user.totalScore() >= 30)
+                return false;
+        }
+        return true;
     }
-
-    @Override
-    public boolean gameWon() {
-        return false;
-    }
-
-    @Override
-    public boolean gameLost() {
-        return false;
-    }
-
-
 }

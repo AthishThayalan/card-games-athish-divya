@@ -16,13 +16,14 @@ public class Main {
     public static void main(String[] args) {
         Deck deck = new Deck();
 
-        User user = new HeartsUser("Divya");
-        User[] users = new User[]{user, new HeartsComputerUser("CPU-1"), new HeartsComputerUser("CPU-2"), new HeartsComputerUser("CPU-3")};
+        HeartsUser user = new HeartsUser("Divya");
+        HeartsUser[] users = new HeartsUser[]{user, new HeartsComputerUser("CPU-1"), new HeartsComputerUser("CPU-2"), new HeartsComputerUser("CPU-3")};
 
 
         Game hearts = new HeartsGame(users);
 
         hearts.play();
+
     }
 
 }

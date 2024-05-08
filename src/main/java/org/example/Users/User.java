@@ -52,48 +52,4 @@ public class User {
         return userInput.readInt(amountOfCardsInHand());
     }
 
-    public boolean hasTwoOfClubs() {
-        return false;
-    }
-
-    public Card[] selectThreeCardsToBePassed() {
-        return null;
-    }
-
-    public void updateScores(int score) {
-    }
-
-    public int totalScore() {
-        return 0;
-    }
-
-    public boolean hasShotTheMoon() {
-        return false;
-    }
-
-    public void addCardToPile(ArrayList<Card> cards) {
-    }
-
-    public List<Integer> getScores() {
-        return null;
-    }
-
-    public void addThreeCards(Card[] cards) {
-    }
-
-    public Card selectOneCard(ArrayList<Card> cards) {
-        return null;
-    }
-
-    public Card selectOneCard(boolean isHeartBroken) {
-        return null;
-    }
-
-    public int findScore() {
-        return 0;
-    }
-
-    public void sortHand() {
-    }
-
 }
