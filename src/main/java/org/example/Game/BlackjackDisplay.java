@@ -18,6 +18,7 @@ public class BlackjackDisplay {
     public void printUsersAndCards(User[] players, boolean userStands) {
         for (User player : players) {
             System.out.println(player.getName() + "'s cards:");
+            System.out.println("*".repeat(20));
             if (player instanceof Computer) {
                 List<Card> cards = player.getCardsInHand();
                 System.out.println(cards.get(0));

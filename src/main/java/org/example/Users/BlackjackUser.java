@@ -4,9 +4,12 @@ import org.example.Deck.Card;
 
 public class BlackjackUser extends User {
 
+    private double money;
+
     public BlackjackUser(String name) {
         super(name);
     }
+
 
     @Override
     public int getHandValue() {

@@ -31,6 +31,7 @@ public class Blackjack extends Game {
     public void play() {
         dealInitialCards();
 
+
         User computer = players[1];
         User player1 = players[0];
 
