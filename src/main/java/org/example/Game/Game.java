@@ -4,7 +4,7 @@ import org.example.Deck.Deck;
 import org.example.Users.User;
 
 public abstract class Game {
-    private Deck deckOfCards;
+    protected Deck deckOfCards;
 
     public Game(User[] users) {
         this.deckOfCards = new Deck();
