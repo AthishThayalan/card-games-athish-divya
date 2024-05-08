@@ -17,20 +17,20 @@ import java.sql.SQLOutput;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-//        BlackjackUser user = new BlackjackUser("Athish");
-//        Computer computer = new Computer();
-//        User[] users = {user,computer};
-//        Blackjack blackjack = new Blackjack(users);
-//        blackjack.play();
-        Deck deck = new Deck();
-
-        HeartsUser player = new HeartsUser("Divya");
-        HeartsUser[] players = new HeartsUser[]{player, new HeartsComputerUser("CPU-1"), new HeartsComputerUser("CPU-2"), new HeartsComputerUser("CPU-3")};
-
-
-        Game hearts = new HeartsGame(players);
-
-        hearts.play();
+        BlackjackUser user = new BlackjackUser("Athish");
+        Computer computer = new Computer();
+        User[] users = {user,computer};
+        Blackjack blackjack = new Blackjack(users);
+        blackjack.play();
+//        Deck deck = new Deck();
+//
+//        HeartsUser player = new HeartsUser("Divya");
+//        HeartsUser[] players = new HeartsUser[]{player, new HeartsComputerUser("CPU-1"), new HeartsComputerUser("CPU-2"), new HeartsComputerUser("CPU-3")};
+//
+//
+//        Game hearts = new HeartsGame(players);
+//
+//        hearts.play();
 
     }
 

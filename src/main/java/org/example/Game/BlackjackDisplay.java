@@ -9,10 +9,9 @@ import java.util.List;
 public class BlackjackDisplay {
     public String drawFlippedCard() {
         StringBuilder builder = new StringBuilder();
-        // ASCII representations for each card
-        builder.append("┌──────────┐\n");
-        builder.append("│##########│\n".repeat(8));
-        builder.append("└──────────┘\n");
+        builder.append("┌─────────┐\n");
+        builder.append("│#########│\n".repeat(5));
+        builder.append("└─────────┘\n");
         return builder.toString();
     }
 
