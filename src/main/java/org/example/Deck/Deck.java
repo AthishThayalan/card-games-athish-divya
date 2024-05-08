@@ -10,6 +10,7 @@ public class Deck {
 
     public Deck() {
         generateDeck();
+
     }
     
     public void generateDeck() {
@@ -18,12 +19,14 @@ public class Deck {
                 deckOfCards.add(new Card(suit, face));
             }
         }
+        shuffleDeck();
     }
 
     public void resetDeck() {
         generateDeck();
         shuffleDeck();
     }
+
 
     public void sortDeck() {
         deckOfCards.sort(new SortByValue());

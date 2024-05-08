@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class UserInput {
     private final static Scanner scanner = new Scanner(System.in);
 
-    public int readInt(int max){
+    public static int readInt(int max){
         int choice = -1;
         do {
             System.out.printf("Enter a number(1-%d) : ",max);

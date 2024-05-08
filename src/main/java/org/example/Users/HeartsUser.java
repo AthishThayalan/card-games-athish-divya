@@ -23,9 +23,7 @@ public class HeartsUser extends User {
     }
 
     public void sortHand() {
-        List<Card> cards = getCardsInHand();
-        cards.sort(new SortBySuit());
-        setCardsInHand(cards);
+        cardsInHand.sort(new SortBySuit());
     }
 
     public Card[] selectThreeCardsToBePassed() {
@@ -39,7 +37,7 @@ public class HeartsUser extends User {
             do {
                 System.out.println("Please choose card no " + (i + 1));
                 indexObject.index = getInput();
-            } while (Arrays.stream(indexes).anyMatch(x -> (int) x == (int) indexObject.index));
+            } while (Arrays.stream(indexes).anyMatch(x -> x == indexObject.index));
             indexes[i] = indexObject.index;
         }
         indexes = Arrays.stream(indexes).sorted().toArray();

@@ -7,13 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private String name;
-    private List<Card> cardsInHand;
-    private UserInput userInput;
-
-    public void setCardsInHand(List<Card> cardsInHand) {
-        this.cardsInHand = cardsInHand;
-    }
+    protected String name;
+    protected List<Card> cardsInHand;
+    protected UserInput userInput;
 
     public User(String name) {
         this.name = name;
@@ -42,9 +38,13 @@ public class User {
 
     }
 
+    public int getHandValue(){
+        return 0;
+    }
+
     public void printCards() {
         for (int i = 0; i < cardsInHand.size(); i++) {
-            System.out.println((i + 1) + ".)  " + cardsInHand.get(i).toString());
+            System.out.printf((i + 1) + ".)\n" + cardsInHand.get(i).toString());
         }
     }
 
