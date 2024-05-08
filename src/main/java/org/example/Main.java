@@ -1,7 +1,11 @@
 package org.example;
 
 import org.example.Deck.*;
+import org.example.Game.Game;
+import org.example.Game.HeartsGame;
 import org.example.Scanner.UserInput;
+import org.example.Users.HeartsComputerUser;
+import org.example.Users.HeartsUser;
 import org.example.Users.User;
 
 import java.sql.SQLOutput;
@@ -12,20 +16,13 @@ public class Main {
     public static void main(String[] args) {
         Deck deck = new Deck();
 
-        User user = new User("Divya");
-        user.addCard(new Card(Suits.diamonds, FaceValue.FOUR));
-        user.addCard(new Card(Suits.diamonds, FaceValue.FIVE));
-        user.addCard(new Card(Suits.diamonds, FaceValue.SIX));
-        user.addCard(new Card(Suits.diamonds, FaceValue.SEVEN));
-        user.printCards();
-        System.out.println("Removed: " + user.playCard(1));
-        user.printCards();
-        UserInput userInput = new UserInput();
-        int userChoice = userInput.readInt(5);
-        System.out.println();
+        User user = new HeartsUser("Divya");
+        User[] users = new User[]{user, new HeartsComputerUser("CPU-1"), new HeartsComputerUser("CPU-2"), new HeartsComputerUser("CPU-3")};
 
 
+        Game hearts = new HeartsGame(users);
 
+        hearts.play();
     }
 
 }

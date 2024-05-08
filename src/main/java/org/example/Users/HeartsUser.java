@@ -3,49 +3,99 @@ package org.example.Users;
 import org.example.Deck.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HeartsUser extends User {
-    private final List<Card> SCORING_CARDS = new ArrayList<Card>();
-    private List<Integer> scores;
+    private final List<Integer> scores;
     private int amountOfHeartsCollected;
     private boolean hasQueenOfSpade;
 
-    public void setScores(List<Integer> scores) {
-        this.scores = scores;
-    }
-
     public HeartsUser(String name) {
         super(name);
-        scores = new ArrayList<Integer>();
-        for (FaceValue face : FaceValue.values())
-            SCORING_CARDS.add(new Card(Suits.hearts, face));
-        SCORING_CARDS.add(new Card(Suits.spades, FaceValue.QUEEN));
-        newTrick();
+        scores = new ArrayList<>();
+        newRound();
     }
 
-    public void newTrick() {
+    public void newRound() {
         amountOfHeartsCollected = 0;
         hasQueenOfSpade = false;
     }
 
+    @Override
     public void sortHand() {
-        getCardsInHand().sort(new SortBySuit());
-        getCardsInHand().sort(new SortByValue());
+        List<Card> cards = getCardsInHand();
+        cards.sort(new SortBySuit());
+        setCardsInHand(cards);
     }
 
+    @Override
     public Card[] selectThreeCardsToBePassed() {
+        System.out.println("User selecting cards");
         Card[] cardsToBePassed = new Card[3];
-        //To be chosen by the user
+        int[] indexes = new int[3];
+        for (int i = 0; i < 3; i++) {
+            var indexObject = new Object() {
+                int index = 0;
+            };
+            do {
+                System.out.println("Please choose card no " + (i + 1));
+                indexObject.index = getInput();
+            } while (Arrays.stream(indexes).anyMatch(x -> (int) x == (int) indexObject.index));
+            indexes[i] = indexObject.index;
+        }
+        indexes = Arrays.stream(indexes).sorted().toArray();
+        for (int i = 2; i >= 0; i--) {
+            cardsToBePassed[i] = playCard(indexes[i]);
+        }
         return cardsToBePassed;
     }
 
+    @Override
     public void addThreeCards(Card[] cards) {
         for (Card card : cards)
             addCard(card);
     }
 
-    public boolean has2OfClubs() {
+    @Override
+    public Card selectOneCard(ArrayList<Card> cards) {
+        Suits suit = cards.get(0).getSuit();
+        System.out.println("Cards in hand:");
+        printCards();
+        System.out.println("Please choose a card to play");
+        int cardToBePlayed = getInput();
+        Card card = playCard(cardToBePlayed);
+        if (card.getSuit() != suit && amountOfCardsInHand(suit) > 0) {
+            System.out.println("Card cannot be selected as it is of the wrong suit.");
+            addCard(card);
+            sortHand();
+            card = selectOneCard(cards);
+        }
+        return card;
+    }
+
+    public int amountOfCardsInHand(Suits suit) {
+        return (int) getCardsInHand().stream().filter(card -> card.getSuit() == suit).count();
+    }
+
+    @Override
+    public Card selectOneCard(boolean isHeartBroken) {
+        System.out.println("Cards in hand:");
+        printCards();
+        System.out.println("Please choose a card to play");
+        int cardToBePlayed = getInput();
+        Card card = playCard(cardToBePlayed);
+        if (!isHeartBroken && card.getSuit() == Suits.hearts) {
+            System.out.println("Card cannot be selected as hearts have not been broken.");
+            addCard(card);
+            sortHand();
+            card = selectOneCard(false);
+        }
+        return card;
+    }
+
+    @Override
+    public boolean hasTwoOfClubs() {
         for (Card card : getCardsInHand()) {
             if (card.equals(new Card(Suits.clubs, FaceValue.TWO)))
                 return true;
@@ -53,38 +103,48 @@ public class HeartsUser extends User {
         return false;
     }
 
+    @Override
     public boolean hasShotTheMoon() {
         return findScore() == 26;
     }
 
-    public void addCardToPile(Card card) {
-        if (card.getSuit() == Suits.hearts)
-            amountOfHeartsCollected++;
-        if (card.getSuit() == Suits.spades && card.getFace() == FaceValue.QUEEN)
-            hasQueenOfSpade = true;
+    @Override
+    public void addCardToPile(ArrayList<Card> cards) {
+        for (Card card : cards) {
+            if (card.getSuit() == Suits.hearts) {
+                amountOfHeartsCollected++;
+                System.out.println(getName() + " has collected the " + card.getFaceSymbol() + " of hearts");
+            }
+            if (card.getSuit() == Suits.spades && card.getFace() == FaceValue.QUEEN) {
+                hasQueenOfSpade = true;
+                System.out.println(getName() + " has also collected the Queen of Spades");
+            }
+        }
+        System.out.println("------------------------------------------");
+        System.out.println(getName() + " has collected " + amountOfHeartsCollected + " hearts");
+        if (hasQueenOfSpade)
+            System.out.println(getName() + " has also collected the Queen of Spades");
+        System.out.println(getName() + " has " + findScore() + " points.");
+        System.out.println("------------------------------------------");
     }
 
+    @Override
     public int findScore() {
         return hasQueenOfSpade ? 13 + amountOfHeartsCollected : amountOfHeartsCollected;
     }
 
-    public void updateScores() {
-        scores.add(findScore());
+    @Override
+    public void updateScores(int score) {
+        scores.add(score);
     }
 
+    @Override
     public int totalScore() {
         return scores.stream().reduce(Integer::sum).orElse(0);
     }
 
+    @Override
     public List<Integer> getScores() {
         return scores;
-    }
-
-    public int getAmountOfHeartsCollected() {
-        return amountOfHeartsCollected;
-    }
-
-    public boolean isHasQueenOfSpade() {
-        return hasQueenOfSpade;
     }
 }
