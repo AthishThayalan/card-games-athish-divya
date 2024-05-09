@@ -1,6 +1,7 @@
 package org.example.Users;
 
 import org.example.Deck.*;
+import org.example.Game.Display;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,10 +69,6 @@ public class HeartsUser extends User {
         return card;
     }
 
-    public int amountOfCardsInHand(Suits suit) {
-        return (int) getCardsInHand().stream().filter(card -> card.getSuit() == suit).count();
-    }
-
     public Card selectOneCard(boolean isHeartBroken) {
         System.out.println("Cards in hand:");
         printCards();
@@ -88,34 +85,48 @@ public class HeartsUser extends User {
     }
 
     public boolean hasTwoOfClubs() {
-        for (Card card : getCardsInHand()) {
+        for (Card card : cardsInHand) {
             if (card.equals(new Card(Suits.clubs, FaceValue.TWO)))
                 return true;
         }
         return false;
     }
 
+    public int findIndexOfTwoOfClub() {
+        for (int i = 0; i < 13; i++) {
+            Card card = cardsInHand.get(i);
+            if (card.equals(new Card(Suits.clubs, FaceValue.TWO))) {
+                return i + 1;
+            }
+        }
+        return -1;
+    }
+
     public boolean hasShotTheMoon() {
         return findScore() == 26;
     }
 
-    public void addCardToPile(ArrayList<Card> cards) {
+    public void addCardsToPile(ArrayList<Card> cards) {
         for (Card card : cards) {
             if (card.getSuit() == Suits.hearts) {
                 amountOfHeartsCollected++;
-                System.out.println(getName() + " has collected the " + card.getFaceSymbol() + " of hearts");
+                System.out.println(name + " has collected the " + card.getFaceSymbol() + " of hearts");
             }
             if (card.getSuit() == Suits.spades && card.getFace() == FaceValue.QUEEN) {
                 hasQueenOfSpade = true;
-                System.out.println(getName() + " has also collected the Queen of Spades");
+                System.out.println(name + " has collected the Queen of Spades");
             }
         }
         System.out.println("------------------------------------------");
-        System.out.println(getName() + " has collected " + amountOfHeartsCollected + " hearts");
+        System.out.print(name + " has collected " + amountOfHeartsCollected + " hearts");
         if (hasQueenOfSpade)
-            System.out.println(getName() + " has also collected the Queen of Spades");
-        System.out.println(getName() + " has " + findScore() + " points.");
+            System.out.print(" and the Queen of Spades");
+        System.out.println(". /t" + name + " has " + findScore() + " points.");
         System.out.println("------------------------------------------");
+    }
+
+    public int amountOfCardsInHand(Suits suit) {
+        return (int) cardsInHand.stream().filter(card -> card.getSuit() == suit).count();
     }
 
     public int findScore() {
@@ -132,5 +143,11 @@ public class HeartsUser extends User {
 
     public List<Integer> getScores() {
         return scores;
+    }
+
+    @Override
+    public void printCards() {
+        System.out.println(name + "'s cards:");
+        Display.displayCards(cardsInHand.toArray(new Card[0]), true);
     }
 }

@@ -1,10 +1,8 @@
 package org.example.Deck;
 
-import java.sql.Array;
-
 public class Card {
-    private Suits suit;
-    private FaceValue face;
+    private final Suits suit;
+    private final FaceValue face;
     private int value;
 
     public Card(Suits suit, FaceValue face) {
@@ -58,18 +56,15 @@ public class Card {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        // ASCII representations for each card
-        builder.append("┌─────────┐\n");
-        builder.append(String.format("│ %-8s│\n", getFaceSymbol()));
-        builder.append("│         │\n");
-        builder.append(String.format("│    %s    │\n", getSuitSymbol()));
-        builder.append("│         │\n");
-        builder.append(String.format("│%8s │\n", getFaceSymbol()));
-        builder.append("└─────────┘\n");
-//        String[] cardArr = {"┌─────────┐",String.format("│ %-8s│\n", getFaceSymbol()),"│         │",String.format("│    %s    │", getSuitSymbol()),"│         │",String.format("│%8s │\n", getFaceSymbol()),"└─────────┘"};
+        // ASCII representations for each cardArt
 
-        return builder.toString();
+        return "┌─────────┐\n" +
+                String.format("│ %-8s│\n", getFaceSymbol()) +
+                "│         │\n" +
+                String.format("│    %s    │\n", getSuitSymbol()) +
+                "│         │\n" +
+                String.format("│%8s │\n", getFaceSymbol()) +
+                "└─────────┘\n";
     }
 
     public boolean equals(Card card) {

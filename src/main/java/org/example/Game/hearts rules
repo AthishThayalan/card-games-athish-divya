@@ -1,0 +1,12 @@
+SCORING
+The object is to avoid scoring points. The game ends when a player reaches 30 points, and the winner is the player with the lowest score at this point.
+Each heart - 1 point
+The Q of Spade - 13 points
+Exception: shooting the moon - If a player gathers all 13 hearts cards and the Q of spade, the player gets 0 points while all the others get 26 points each.
+
+HOW TO PLAY
+The person who holds the 2 of clubs must lead it to the first trick.
+The other players, in clockwise order, must play a card of the suit which was led if possible.
+If they do not have a card of that suit, they may play any card.
+The person who played the highest card of the lead suit takes the trick and leads to the next trick.
+A trick cannot be lead with hearts until hearts have been broken
