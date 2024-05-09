@@ -16,7 +16,6 @@ public class Blackjack extends Game {
         this.userStands = false;
         this.players = users;
         this.blackjackDisplay = new BlackjackDisplay();
-
     }
 
     @Override
@@ -125,6 +124,8 @@ public class Blackjack extends Game {
     }
 
     private void dealersTurn(User player) {
+        System.out.println("Dealer Hits ... ");
+        SleepUtils.sleep(2000);
         Card dealtCard = deckOfCards.dealCard();
         assignCardValues(dealtCard, player);
         player.addCard(dealtCard);
@@ -133,8 +134,6 @@ public class Blackjack extends Game {
 
     private void evaluateGame(User player1, User computer, double bet) {
         if (userChoseStand() || checkForBlackjack(player1, computer)) {
-            System.out.println("Flipping Dealers Card ...");
-            SleepUtils.sleep(2000);
             this.blackjackDisplay.printUsersAndCards(players, userStands);
             int playerTotal = getPlayerHandTotal(player1);
             int computerTotal = getPlayerHandTotal(computer);
@@ -186,4 +185,5 @@ public class Blackjack extends Game {
             card.setValue(11);
         }
     }
+
 }

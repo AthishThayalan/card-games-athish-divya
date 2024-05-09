@@ -15,7 +15,7 @@ public class Main {
         int mainMenuOption;
 
         System.out.println("WELCOME TO THE GAMES!!!");
-        System.out.println("========================");
+        System.out.println("================================================");
         String name = UserInput.readName();
 
         RunGame runGame = new RunGame();
@@ -23,6 +23,8 @@ public class Main {
         while (splashMenuOption != 3) {
             splashMenuOption = splashMenu.getOption();
             BlackjackDisplay blackjackDisplay = new BlackjackDisplay();
+            System.out.println("================================================");
+            System.out.println();
             switch (splashMenuOption) {
                 case 1:
                     do {
