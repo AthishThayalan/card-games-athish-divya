@@ -1,6 +1,7 @@
 package org.example.Users;
 
 import org.example.Deck.Card;
+import org.example.Game.Display;
 import org.example.Scanner.UserInput;
 
 import java.util.ArrayList;
@@ -9,12 +10,10 @@ import java.util.List;
 public class User {
     protected String name;
     protected List<Card> cardsInHand;
-    protected UserInput userInput;
 
     public User(String name) {
         this.name = name;
-        this.userInput = new UserInput();
-        cardsInHand = new ArrayList<Card>();
+        cardsInHand = new ArrayList<>();
     }
 
     public List<Card> getCardsInHand() {
@@ -43,14 +42,12 @@ public class User {
     }
 
     public void printCards() {
-        for (int i = 0; i < cardsInHand.size(); i++) {
-            System.out.printf((i + 1) + ".)\n" + cardsInHand.get(i).toString());
-        }
-
+        System.out.println(name + "'s cards:");
+        Display.displayCards(cardsInHand.toArray(new Card[0]), false);
     }
 
     public int getInput() {
-        return userInput.readInt(amountOfCardsInHand());
+        return UserInput.readInt(amountOfCardsInHand());
     }
 
 }

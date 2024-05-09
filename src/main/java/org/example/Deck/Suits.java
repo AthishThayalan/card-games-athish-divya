@@ -1,7 +1,7 @@
 package org.example.Deck;
 
 public enum Suits {
-    diamonds("♦"),spades("♠"),clubs("♣"),hearts("♥");
+    DIAMONDS("♦"), SPADES("♠"), CLUBS("♣"), HEARTS("♥");
 
     private final String suitSymbol;
 

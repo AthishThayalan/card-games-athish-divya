@@ -14,7 +14,6 @@ public class HeartsComputerUser extends HeartsUser {
 
     @Override
     public Card[] selectThreeCardsToBePassed() {
-        System.out.println("CPU selecting cards");
         Card[] cardsToBePassed = new Card[3];
         int randomIndex;
         for (int i = 0; i < 3; i++) {
@@ -40,7 +39,7 @@ public class HeartsComputerUser extends HeartsUser {
     public Card selectOneCard(boolean isHeartBroken) {
         int randomIndex = random.nextInt(amountOfCardsInHand());
         if (!isHeartBroken)
-            while (getCardsInHand().get(randomIndex).getSuit() == Suits.hearts) {
+            while (getCardsInHand().get(randomIndex).getSuit() == Suits.HEARTS) {
                 randomIndex = random.nextInt(amountOfCardsInHand());
             }
         return playCard(randomIndex + 1);

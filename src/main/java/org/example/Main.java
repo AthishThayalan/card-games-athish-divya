@@ -49,7 +49,9 @@ public class Main {
                                 runGame.runHearts(name);
                                 break;
                             case 2:
-                                System.out.println("Hearts rules");
+                                System.out.println("Loading rules...");
+                                SleepUtils.sleep(1000);
+                                HeartsDisplay.printRules();
                                 break;
                         }
                     } while (mainMenuOption == 2);
