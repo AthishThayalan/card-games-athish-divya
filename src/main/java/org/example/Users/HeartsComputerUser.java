@@ -14,7 +14,6 @@ public class HeartsComputerUser extends HeartsUser {
 
     @Override
     public Card[] selectThreeCardsToBePassed() {
-        System.out.println("CPU selecting cards");
         Card[] cardsToBePassed = new Card[3];
         int randomIndex;
         for (int i = 0; i < 3; i++) {

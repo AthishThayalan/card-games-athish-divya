@@ -6,7 +6,7 @@ public class Display {
 
     public static void displayCards(Card[] cards, boolean areCardsNumbered) {
         String[] cardArr = {"┌─────────┐", String.format("│ %-8s│", "#"), "│         │", String.format("│    %s    │", "*"), "│         │", String.format("│%8s │", "#"), "└─────────┘"};
-        int amountOfCards = 5;
+        int amountOfCards = 7;
         Card[] cardsInARow = new Card[amountOfCards];
         for (int i = 0; i < cards.length; ) {
             for (int j = 0; j < amountOfCards; j++) {

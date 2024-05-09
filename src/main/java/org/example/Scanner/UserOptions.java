@@ -8,12 +8,14 @@ public class UserOptions extends UserInput {
     }
 
     public int getOption() {
+        System.out.println("================================================");
         System.out.println("Please choose one of the following option:");
         printUserOptions(options);
         int optionNum = 0;
         while (optionNum == 0) {
             optionNum = readInt(options.length);
         }
+        System.out.println("================================================");
         return optionNum;
     }
 

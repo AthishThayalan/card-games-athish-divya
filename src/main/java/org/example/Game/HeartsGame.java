@@ -1,6 +1,7 @@
 package org.example.Game;
 
 import org.example.Deck.*;
+import org.example.Sleep.SleepUtils;
 import org.example.Users.HeartsUser;
 
 import java.util.*;
@@ -18,7 +19,8 @@ public class HeartsGame extends Game {
     }
 
     public void dealerDeals() {
-        System.out.println("Dealing Cards");
+        System.out.format("%30s", "DEALING CARDS\n");
+        System.out.format("%30s", "─────────────\n");
         deckOfCards.shuffleDeck();
         for (int i = 0; i < 13; i++) {
             for (HeartsUser user : users)
@@ -41,6 +43,11 @@ public class HeartsGame extends Game {
     }
 
     public void trick(boolean isFirstTrick) {
+        System.out.println();
+        System.out.println("───────────────────────────────────────────────");
+        System.out.println("─────────────  STARTING A NEW TRICK  ──────────");
+        System.out.println("───────────────────────────────────────────────");
+        System.out.println();
         int currentUserIndex = userToLeadTheTrick;
         HeartsUser currentUser = users[currentUserIndex];
         ArrayList<Card> cardsPlayed = new ArrayList<>();
@@ -60,13 +67,18 @@ public class HeartsGame extends Game {
         }
         userToLeadTheTrick = findUserWhoTookTheTrick(cardsPlayed, userToLeadTheTrick);
         currentUser = users[userToLeadTheTrick];
+        System.out.println("------------------------------");
         System.out.println(currentUser.getName() + " took the trick");
+        System.out.println("------------------------------");
         currentUser.addCardsToPile(cardsPlayed);
         if (!isHeartBroken)
             isHeartBroken = checkIfHeartIsBroken(cardsPlayed);
+        SleepUtils.sleep(1000);
     }
 
     public void passCards() {
+        System.out.println(users[0].getName() + "'s cards:");
+        System.out.println("───────────────────");
         users[0].printCards();
         ArrayList<Card[]> cardsToBePassed = new ArrayList<>();
         switch (roundNumber % 4) {
@@ -83,7 +95,8 @@ public class HeartsGame extends Game {
         for (HeartsUser user : users) {
             cardsToBePassed.add(user.selectThreeCardsToBePassed());
         }
-        System.out.println("You have received :");
+        System.out.println();
+        System.out.println("YOU HAVE RECEIVED :");
         switch (roundNumber % 4) {
             case 0:
                 //Pass left
@@ -151,15 +164,18 @@ public class HeartsGame extends Game {
         for (int i = 0; i < 4; i++) {
             scores[i] = users[i].getScores().stream().mapToInt(x -> x).toArray();
         }
-        System.out.println(" Scores ");
-        System.out.println("=========");
-        System.out.format("%15s%15s%15s%15s%n", users[0].getName(), users[1].getName(), users[2].getName(), users[3].getName());
+        System.out.println();
+        System.out.println("              ==========");
+        System.out.println("                SCORES ");
+        System.out.println("              ==========");
+        System.out.format("%10s%10s%10s%10s%n", users[0].getName(), users[1].getName(), users[2].getName(), users[3].getName());
         for (int i = 0; i < scores[0].length; i++) {
-            System.out.format("%15s%15s%15s%15s%n", scores[0][i], scores[1][i], scores[2][i], scores[3][i]);
+            System.out.format("%10s%10s%10s%10s%n", scores[0][i], scores[1][i], scores[2][i], scores[3][i]);
         }
-        System.out.println("----------------------------------");
-        System.out.format("%15s%15s%15s%15s%n", users[0].totalScore(), users[1].totalScore(), users[2].totalScore(), users[3].totalScore());
-        System.out.println("----------------------------------");
+        System.out.println("----------------------------------------------");
+        System.out.format("%10s%10s%10s%10s%n", users[0].totalScore(), users[1].totalScore(), users[2].totalScore(), users[3].totalScore());
+        System.out.println("----------------------------------------------");
+        SleepUtils.sleep(1000);
     }
 
     public void addScores() {

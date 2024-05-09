@@ -1,14 +1,11 @@
 package org.example.Game;
 
 import org.example.Deck.Card;
-import org.example.Deck.Deck;
-import org.example.Deck.FaceValue;
-import org.example.Deck.Suits;
 import org.example.Scanner.UserInput;
+import org.example.Sleep.SleepUtils;
+import org.example.Users.BlackjackUser;
 import org.example.Users.Computer;
 import org.example.Users.User;
-
-import java.util.List;
 
 public class Blackjack extends Game {
     private User[] players;
@@ -19,7 +16,6 @@ public class Blackjack extends Game {
         this.userStands = false;
         this.players = users;
         this.blackjackDisplay = new BlackjackDisplay();
-
     }
 
     @Override
@@ -31,7 +27,6 @@ public class Blackjack extends Game {
     public void play() {
         dealInitialCards();
 
-
         User computer = players[1];
         User player1 = players[0];
 
@@ -39,17 +34,20 @@ public class Blackjack extends Game {
             this.blackjackDisplay.printUsersAndCards(players, userStands);
             return;
         }
+
         outerLoop:
         while (gameOngoing()) {
+            System.out.println(player1.getName() + ", how much do you want to bet?");
+            double bet = UserInput.readDouble();
+            ((BlackjackUser) player1).setBet(bet);
+            System.out.println("OKAY GIMME YOUR MONEY !!!");
+            SleepUtils.sleep(1000);
             this.blackjackDisplay.printUsersAndCards(players, userStands);
             System.out.println("The value of your hand is: " + getPlayerHandTotal(player1));
             for (User player : players) {
                 if (player instanceof Computer) {
                     while (getPlayerHandTotal(player) < 17) {
-                        Card dealtCard = deckOfCards.dealCard();
-                        assignCardValues(dealtCard, player);
-                        player.addCard(dealtCard);
-                        adjustAcesValue(player);
+                        dealersTurn(computer);
                         this.blackjackDisplay.printUsersAndCards(players, userStands);
                     }
                 } else {
@@ -66,11 +64,14 @@ public class Blackjack extends Game {
                             System.out.println("Player 1 value: " + player1.getHandValue());
                             System.out.println("CPU value: " + computer.getHandValue());
                             if (getPlayerHandTotal(player) > 21) {
-                                System.out.println(player1.getName()+" has gone bust! Player 1's hand totalled:  " + getPlayerHandTotal(player));
                                 computer.printCards();
+                                System.out.println(player1.getName() + " has gone bust! Player 1's hand totalled:  " + getPlayerHandTotal(player));
+                                System.out.println("You have lost your bet of: " + bet);
+
                                 break outerLoop;
                             } else if (getPlayerHandTotal(player) == 21) {
-                                System.out.println("YOU WIN! YOU GOT 21!!!");
+                                System.out.println("YOU WIN, YOU GOT 21 !");
+                                System.out.println("You win: " + bet);
                                 break outerLoop;
                             }
                         } else if (choice == 2) {
@@ -81,28 +82,12 @@ public class Blackjack extends Game {
                     } while (choice == 1 && gameOngoing());
                 }
             }
-
-            if (userChoseStand() || checkForBlackjack(player1, computer)) {
-                this.blackjackDisplay.printUsersAndCards(players, userStands);
-                int playerTotal = getPlayerHandTotal(player1);
-                int computerTotal = getPlayerHandTotal(computer);
-
-                if (playerTotal > 21) {
-                    System.out.println("UNLUCKY YOU WENT BUST. DEALER WINS!");
-                } else if (computerTotal > 21 || playerTotal > computerTotal) {
-                    System.out.println("CONGRATULATIONS YOU BEAT THE DEALER!");
-                } else if (playerTotal < computerTotal) {
-                    System.out.println("Unlucky. The Dealers beat you this time :(");
-                } else {
-                    System.out.println("WOW! IT'S A TIE!");
-                }
-                System.out.println(player1.getName()+"'s value: " + getPlayerHandTotal(player1));
-                System.out.println("Dealer Value: " + getPlayerHandTotal(computer));
-                break;
-
-            }
-
+            evaluateGame(player1, computer, bet);
+            break;
         }
+
+        SleepUtils.sleep(4000);
+
     }
 
     @Override
@@ -115,6 +100,9 @@ public class Blackjack extends Game {
         return true;
     }
 
+    public BlackjackDisplay getBlackjackDisplay() {
+        return blackjackDisplay;
+    }
 
     public boolean userChoseStand() {
         return this.userStands;
@@ -124,15 +112,46 @@ public class Blackjack extends Game {
         return player.getHandValue();
     }
 
-    public void dealInitialCards() {
+    private void dealInitialCards() {
         for (User player : players) {
             for (int i = 0; i < 2; i++) {
                 Card dealtCard = deckOfCards.dealCard();
                 assignCardValues(dealtCard, player);
                 player.addCard(dealtCard);
                 adjustAcesValue(player);
-
             }
+        }
+    }
+
+    private void dealersTurn(User player) {
+        System.out.println("Dealer Hits ... ");
+        SleepUtils.sleep(2000);
+        Card dealtCard = deckOfCards.dealCard();
+        assignCardValues(dealtCard, player);
+        player.addCard(dealtCard);
+        adjustAcesValue(player);
+    }
+
+    private void evaluateGame(User player1, User computer, double bet) {
+        if (userChoseStand() || checkForBlackjack(player1, computer)) {
+            this.blackjackDisplay.printUsersAndCards(players, userStands);
+            int playerTotal = getPlayerHandTotal(player1);
+            int computerTotal = getPlayerHandTotal(computer);
+
+            if (playerTotal > 21) {
+                System.out.println("UNLUCKY YOU WENT BUST. DEALER WINS!");
+                System.out.println("You lose " + bet);
+            } else if (computerTotal > 21 || playerTotal > computerTotal) {
+                System.out.println("CONGRATULATIONS YOU BEAT THE DEALER!");
+                System.out.println("You won: " + bet);
+            } else if (playerTotal < computerTotal) {
+                System.out.println("Unlucky. The Dealers beat you this time :(");
+                System.out.println("You lose " + bet);
+            } else {
+                System.out.println("WOW! IT'S A TIE!");
+            }
+            System.out.println(player1.getName() + "'s value: " + getPlayerHandTotal(player1));
+            System.out.println("Dealer Value: " + getPlayerHandTotal(computer));
         }
     }
 
@@ -148,8 +167,7 @@ public class Blackjack extends Game {
         return false;
     }
 
-
-    public void adjustAcesValue(User player) {
+    private void adjustAcesValue(User player) {
         for (Card card : player.getCardsInHand()) {
             if (card.getFaceSymbol().equals("A")) {
                 int handTotal = getPlayerHandTotal(player);
@@ -166,6 +184,6 @@ public class Blackjack extends Game {
         } else if (card.getFaceSymbol().equals("A")) {
             card.setValue(11);
         }
-
     }
+
 }

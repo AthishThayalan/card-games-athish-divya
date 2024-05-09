@@ -28,7 +28,6 @@ public class HeartsUser extends User {
     }
 
     public Card[] selectThreeCardsToBePassed() {
-        System.out.println("User selecting cards");
         Card[] cardsToBePassed = new Card[3];
         int[] indexes = new int[3];
         for (int i = 0; i < 3; i++) {
@@ -56,6 +55,7 @@ public class HeartsUser extends User {
     public Card selectOneCard(ArrayList<Card> cards) {
         Suits suit = cards.get(0).getSuit();
         System.out.println("Cards in hand:");
+        System.out.println("──────────────");
         printCards();
         System.out.println("Please choose a card to play");
         int cardToBePlayed = getInput();
@@ -71,6 +71,7 @@ public class HeartsUser extends User {
 
     public Card selectOneCard(boolean isHeartBroken) {
         System.out.println("Cards in hand:");
+        System.out.println("──────────────");
         printCards();
         System.out.println("Please choose a card to play");
         int cardToBePlayed = getInput();
@@ -121,8 +122,7 @@ public class HeartsUser extends User {
         System.out.print(name + " has collected " + amountOfHeartsCollected + " hearts");
         if (hasQueenOfSpade)
             System.out.print(" and the Queen of Spades");
-        System.out.println(". /t" + name + " has " + findScore() + " points.");
-        System.out.println("------------------------------------------");
+        System.out.println(".\t" + name + " has " + findScore() + " points.");
     }
 
     public int amountOfCardsInHand(Suits suit) {
@@ -147,7 +147,6 @@ public class HeartsUser extends User {
 
     @Override
     public void printCards() {
-        System.out.println(name + "'s cards:");
         Display.displayCards(cardsInHand.toArray(new Card[0]), true);
     }
 }
