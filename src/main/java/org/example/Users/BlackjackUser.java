@@ -4,12 +4,21 @@ import org.example.Deck.Card;
 
 public class BlackjackUser extends User {
 
-    private double money;
+
+    private double bet;
 
     public BlackjackUser(String name) {
         super(name);
+
     }
 
+    public void setBet(double bet) {
+        this.bet = bet;
+    }
+
+    public double getBet() {
+        return bet;
+    }
 
     @Override
     public int getHandValue() {
