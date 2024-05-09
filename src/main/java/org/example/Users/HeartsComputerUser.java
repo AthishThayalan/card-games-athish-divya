@@ -39,7 +39,7 @@ public class HeartsComputerUser extends HeartsUser {
     public Card selectOneCard(boolean isHeartBroken) {
         int randomIndex = random.nextInt(amountOfCardsInHand());
         if (!isHeartBroken)
-            while (getCardsInHand().get(randomIndex).getSuit() == Suits.hearts) {
+            while (getCardsInHand().get(randomIndex).getSuit() == Suits.HEARTS) {
                 randomIndex = random.nextInt(amountOfCardsInHand());
             }
         return playCard(randomIndex + 1);

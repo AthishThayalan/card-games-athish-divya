@@ -152,7 +152,7 @@ public class HeartsGame extends Game {
 
     public boolean checkIfHeartIsBroken(ArrayList<Card> cards) {
         for (Card card : cards) {
-            if (card.getSuit() == Suits.hearts)
+            if (card.getSuit() == Suits.HEARTS)
                 return true;
         }
         return false;

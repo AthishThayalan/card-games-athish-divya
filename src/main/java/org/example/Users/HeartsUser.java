@@ -76,7 +76,7 @@ public class HeartsUser extends User {
         System.out.println("Please choose a card to play");
         int cardToBePlayed = getInput();
         Card card = playCard(cardToBePlayed);
-        if (!isHeartBroken && card.getSuit() == Suits.hearts && amountOfCardsInHand(Suits.hearts) != amountOfCardsInHand()) {
+        if (!isHeartBroken && card.getSuit() == Suits.HEARTS && amountOfCardsInHand(Suits.HEARTS) != amountOfCardsInHand()) {
             System.out.println("Card cannot be selected as hearts have not been broken.");
             addCard(card);
             sortHand();
@@ -87,7 +87,7 @@ public class HeartsUser extends User {
 
     public boolean hasTwoOfClubs() {
         for (Card card : cardsInHand) {
-            if (card.equals(new Card(Suits.clubs, FaceValue.TWO)))
+            if (card.equals(new Card(Suits.CLUBS, FaceValue.TWO)))
                 return true;
         }
         return false;
@@ -96,7 +96,7 @@ public class HeartsUser extends User {
     public int findIndexOfTwoOfClub() {
         for (int i = 0; i < 13; i++) {
             Card card = cardsInHand.get(i);
-            if (card.equals(new Card(Suits.clubs, FaceValue.TWO))) {
+            if (card.equals(new Card(Suits.CLUBS, FaceValue.TWO))) {
                 return i + 1;
             }
         }
@@ -109,11 +109,11 @@ public class HeartsUser extends User {
 
     public void addCardsToPile(ArrayList<Card> cards) {
         for (Card card : cards) {
-            if (card.getSuit() == Suits.hearts) {
+            if (card.getSuit() == Suits.HEARTS) {
                 amountOfHeartsCollected++;
                 System.out.println(name + " has collected the " + card.getFaceSymbol() + " of hearts");
             }
-            if (card.getSuit() == Suits.spades && card.getFace() == FaceValue.QUEEN) {
+            if (card.getSuit() == Suits.SPADES && card.getFace() == FaceValue.QUEEN) {
                 hasQueenOfSpade = true;
                 System.out.println(name + " has collected the Queen of Spades");
             }
